@@ -1,6 +1,6 @@
 {
   "name": "girlfriend-cli",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "manage your girl friend",
   "homepage": "https://github.com/dunkbing/girlfriend-cli",
   "main": "bin/index.js",
