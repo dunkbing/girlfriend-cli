@@ -9,6 +9,10 @@
   },
   "keywords": [],
   "author": "dunkbing",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dunkbing/girlfriend-cli"
+  },
   "license": "ISC",
   "bin": {
     "girlfriend": "./bin/index.js"
