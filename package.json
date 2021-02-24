@@ -1,7 +1,8 @@
 {
   "name": "girlfriend-cli",
-  "version": "1.0.1",
-  "description": "",
+  "version": "1.0.2",
+  "description": "manage your girl friend",
+  "homepage": "https://github.com/dunkbing/girlfriend-cli",
   "main": "bin/index.js",
   "type": "module",
   "scripts": {
