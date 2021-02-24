@@ -16,17 +16,20 @@ db.defaults({ todos: [], hobbies: [], }).write();
 // usage represents the help guide
 const usage = function () {
   const usageText = `
-  todo helps you manage you todo tasks.
+  girlfriend helps you manage your girl.
 
   usage:
-    todo <command>
+    girlfriend <command>
 
     commands can be:
 
-    hobby:    list all of your girl friend hobbies 
-              or add a new one
-    kiss:     kiss you
-    help:     used to print the usage guide
+    hobby:      list all of your girl friend hobbies 
+                or add a new one
+    kiss:       kiss you
+    naked:      show naked image
+    show-boobs: show boobs
+    help:       show help
+    version:    show version number
   `;
   console.log(usageText);
 }
