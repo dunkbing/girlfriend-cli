@@ -4,6 +4,7 @@ import lowdb from 'lowdb';
 import FileSync from 'lowdb/adapters/FileAsync.js';
 import prompt from './prompt.js';
 import commands from './commands.js';
+import { naked, showBoobs } from './naked.js';
 
 const args = process.argv;
 const adapter = new FileSync('db.json');
@@ -80,6 +81,12 @@ switch (args[2]) {
     break;
   case commands.kiss:
     kissMe();
+    break;
+  case commands.showBoobs:
+    showBoobs();
+    break;
+  case commands.naked:
+    naked();
     break;
   default:
     errorLog('invalid command passed');
