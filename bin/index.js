@@ -1,17 +1,13 @@
 #!/usr/bin/env node
 import chalk from 'chalk';
-import lowdb from 'lowdb';
-import FileSync from 'lowdb/adapters/FileAsync.js';
+import { Low, JSONFile } from 'lowdb';
 import prompt from './prompt.js';
 import commands from './commands.js';
 import { naked, showBoobs } from './naked.js';
 
 const args = process.argv;
-const adapter = new FileSync('db.json');
-const db = await lowdb(adapter);
-
-// Set some defaults (required if your JSON file is empty)
-db.defaults({ todos: [], hobbies: [], }).write();
+const adapter = new JSONFile('db.json');
+const db = new Low(adapter);
 
 // usage represents the help guide
 const usage = function () {
@@ -42,10 +38,10 @@ function errorLog(error) {
 
 // show all of your girl's hobbies
 function showHobbies() {
-  const hobbies = db.get('hobbies').value();
-  let index = 1;
-  hobbies.forEach(hobby => {
-    const todoText = `${index++}. ${hobby}`
+  const { hobbies } = db.data;
+  console.log(hobbies)
+  hobbies.forEach((hobby, index) => {
+    const todoText = `${index+1}. ${hobby}`
     console.log(todoText);
   });
 }
@@ -55,10 +51,10 @@ function newHobbies() {
   showHobbies();
   const q = chalk.blue(`Type in your girl friend's hobby (or enter to quit): `);
   prompt(q).then(hobby => {
-    if (hobby) {
-      db.get('hobbies')
-        .push(hobby)
-        .write();
+    const { hobbies } = db.data
+    if (hobby && !hobbies.includes(hobby)) {
+      hobbies.push(hobby)
+      db.write()
     }
     console.log(chalk.green('Ok!'));
   });
@@ -74,24 +70,31 @@ if (args.length > 3) {
   usage();
 }
 
-//...
-switch (args[2]) {
-  case commands.help:
-    usage();
-    break
-  case commands.hobby:
-    newHobbies();
-    break;
-  case commands.kiss:
-    kissMe();
-    break;
-  case commands.showBoobs:
-    showBoobs();
-    break;
-  case commands.naked:
-    naked();
-    break;
-  default:
-    errorLog('invalid command passed');
-    usage();
+async function main() {
+  await db.read()
+  // Set some defaults (required if your JSON file is empty)
+  db.data ||= { todos: [], hobbies: [], };
+
+  switch (args[2]) {
+    case commands.help:
+      usage();
+      break
+    case commands.hobby:
+      newHobbies();
+      break;
+    case commands.kiss:
+      kissMe();
+      break;
+    case commands.showBoobs:
+      showBoobs();
+      break;
+    case commands.naked:
+      naked();
+      break;
+    default:
+      errorLog('invalid command');
+      usage();
+  }
 }
+
+main()
